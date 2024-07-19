@@ -20,7 +20,6 @@ struct TrueDoNotDisturbApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var statusItem: NSStatusItem!
-    private var popover: NSPopover!
     private var downtimeVM: ScriptViewModel!
         
     @MainActor
@@ -31,29 +30,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         
         if let statusButton = statusItem.button {
             statusButton.image = NSImage(systemSymbolName: "1.circle", accessibilityDescription: "Line")
-            statusButton.action = #selector(togglePopover)
         }
-        
-        self.popover = NSPopover()
-        self.popover.contentSize = NSSize(width: 300, height: 300)
-        self.popover.behavior = .transient
-        self.popover.contentViewController = NSHostingController(rootView: ContentView(vm: self.downtimeVM))
         
         setupMenus()
-    }
-    
-    @objc func togglePopover() {
-        Task {
-            await self.downtimeVM.script()
-        }
-        
-        if let button = statusItem.button {
-            if popover.isShown {
-                self.popover.performClose(nil)
-            } else {
-                popover.show(relativeTo: button.bounds, of:button, preferredEdge: NSRectEdge.minY)
-            }
-        }
     }
     
     func setupMenus() {
