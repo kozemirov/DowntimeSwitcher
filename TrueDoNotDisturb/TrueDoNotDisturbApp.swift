@@ -21,43 +21,65 @@ struct TrueDoNotDisturbApp: App {
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var statusItem: NSStatusItem!
     private var downtimeVM: ScriptViewModel!
-        
+
     @MainActor
     func applicationDidFinishLaunching(_ notification: Notification) {
         self.downtimeVM = ScriptViewModel()
-        
+
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        
+
         if let statusButton = statusItem.button {
             statusButton.image = NSImage(systemSymbolName: "1.circle", accessibilityDescription: "Line")
+            statusButton.target = self
+            statusButton.action = #selector(handleStatusItemClick(_:))
+            statusButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
-        
-        setupMenus()
     }
-    
-    func setupMenus() {
-        // 1
+
+    @objc func handleStatusItemClick(_ sender: NSStatusBarButton) {
+        let event = NSApp.currentEvent!
+        if event.type == .rightMouseUp {
+            showMenu()
+        } else if event.type == .leftMouseUp {
+            performLeftClickAction()
+        }
+    }
+
+    func performLeftClickAction() {
+        print("Left click action performed")
+        Task {
+            await self.downtimeVM.script()
+        }
+    }
+
+    func showMenu() {
+        let menu = createMenu()
+        if let button = statusItem.button {
+            statusItem.menu = menu
+            button.performClick(nil)
+            statusItem.menu = nil
+        }
+    }
+
+    func createMenu() -> NSMenu {
         let menu = NSMenu()
 
-        // 2
-        let one = NSMenuItem(title: "One", action: #selector(didTapOne) , keyEquivalent: "1")
+        let one = NSMenuItem(title: "One", action: #selector(didTapOne), keyEquivalent: "1")
         menu.addItem(one)
 
-        let two = NSMenuItem(title: "Two", action: #selector(didTapTwo) , keyEquivalent: "2")
+        let two = NSMenuItem(title: "Two", action: #selector(didTapTwo), keyEquivalent: "2")
         menu.addItem(two)
 
-        let three = NSMenuItem(title: "Three", action: #selector(didTapThree) , keyEquivalent: "3")
+        let three = NSMenuItem(title: "Three", action: #selector(didTapThree), keyEquivalent: "3")
         menu.addItem(three)
 
         menu.addItem(NSMenuItem.separator())
 
         menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
 
-        // 3
-        statusItem.menu = menu
+        return menu
     }
-    
-    // 1
+
     private func changeStatusBarButton(number: Int) {
         if let button = statusItem.button {
             button.image = NSImage(systemSymbolName: "\(number).circle", accessibilityDescription: number.description)
