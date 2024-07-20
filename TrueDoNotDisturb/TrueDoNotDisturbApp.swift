@@ -25,8 +25,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
     @MainActor
     func applicationDidFinishLaunching(_ notification: Notification) {
-        
-        requestAccessibilityPermission()
         self.downtimeVM = DowntimeViewModel()
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -41,21 +39,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
     @objc func handleStatusItemClick(_ sender: NSStatusBarButton) {
         let event = NSApp.currentEvent!
-        if event.type == .rightMouseUp {
-            showMenu()
-        } else if event.type == .leftMouseUp {
-            performLeftClickAction()
+        if event.type == .leftMouseUp {
+            leftClickScriptRun()
+        } else if event.type == .rightMouseUp {
+            rightClickMenuShow()
         }
     }
 
-    func performLeftClickAction() {
+    func leftClickScriptRun() {
         Task {
             await self.downtimeVM.script()
             await changeStatusBarButton(state: self.downtimeVM.downtimeState)
         }
     }
 
-    func showMenu() {
+    func rightClickMenuShow() {
         let menu = createMenu()
         if let button = statusItem.button {
             statusItem.menu = menu
@@ -67,18 +65,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     func createMenu() -> NSMenu {
         let menu = NSMenu()
 
-        let one = NSMenuItem(title: "One", action: #selector(didTapOne), keyEquivalent: "1")
-        menu.addItem(one)
-
-        let two = NSMenuItem(title: "Two", action: #selector(didTapTwo), keyEquivalent: "2")
-        menu.addItem(two)
+        let loginLaunch = NSMenuItem(title: "Launch at login", action: #selector(addLoginLaunch), keyEquivalent: "")
+        menu.addItem(loginLaunch)
         
-        let three = NSMenuItem(title: "Access", action: #selector(didTapThree), keyEquivalent: "3")
-        menu.addItem(three)
+        let permissions = NSMenuItem(title: "Request pesmissions", action: #selector(requestPermission), keyEquivalent: "")
+        menu.addItem(permissions)
 
         menu.addItem(NSMenuItem.separator())
 
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
 
         return menu
     }
@@ -91,24 +86,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         }
     }
 
-    @objc func didTapOne() {
-//        changeStatusBarButton(state: )
-    }
+    @objc func addLoginLaunch() {
 
-    @objc func didTapTwo() {
-//        changeStatusBarButton(number: 2)
     }
     
-    @objc func didTapThree() {
-        requestAccessibilityPermission()
-    }
-    
-    func requestAccessibilityPermission() {
-            let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
-            let accessEnabled = AXIsProcessTrustedWithOptions(options)
-            
-            if !accessEnabled {
-                print("Accessibility permissions were not enabled by the user.")
-            }
+    @objc func requestPermission() {
+        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
+        let accessEnabled = AXIsProcessTrustedWithOptions(options)
+        
+        if !accessEnabled {
+            print("Accessibility permissions were not enabled by the user.")
         }
+    }
 }
