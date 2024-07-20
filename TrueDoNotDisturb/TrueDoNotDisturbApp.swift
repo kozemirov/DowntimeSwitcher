@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ApplicationServices
+import ServiceManagement
 
 @main
 struct TrueDoNotDisturbApp: App {
@@ -68,6 +69,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         let loginLaunch = NSMenuItem(title: "Launch at login", action: #selector(addLoginLaunch), keyEquivalent: "")
         menu.addItem(loginLaunch)
         
+        let doNotLoginLaunch = NSMenuItem(title: "Do not launch at login", action: #selector(removeLoginLaunch), keyEquivalent: "")
+        menu.addItem(doNotLoginLaunch)
+        
         let permissions = NSMenuItem(title: "Request pesmissions", action: #selector(requestPermission), keyEquivalent: "")
         menu.addItem(permissions)
 
@@ -87,7 +91,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     }
 
     @objc func addLoginLaunch() {
-
+        addToLoginItems()
+    }
+    
+    @objc func removeLoginLaunch() {
+        removeFromLoginItems()
     }
     
     @objc func requestPermission() {
@@ -95,7 +103,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         let accessEnabled = AXIsProcessTrustedWithOptions(options)
         
         if !accessEnabled {
+//            AccessibilityHelper.showAccessibilityAlert()
             print("Accessibility permissions were not enabled by the user.")
         }
+    }
+    
+    func addToLoginItems() {
+        do {
+            let appService = SMAppService.mainApp
+            try appService.register()
+            print("Successfully added to login items.")
+        } catch {
+            print("Failed to add to login items: \(error)")
+        }
+    }
+
+    func removeFromLoginItems() {
+        do {
+            let appService = SMAppService.mainApp
+            try appService.unregister()
+            print("Successfully removed from login items.")
+        } catch {
+            print("Failed to remove from login items: \(error)")
+        }
+    }
+
+    func checkIfLaunchAtLogin() {
+        let appService = SMAppService.mainApp
+//        launchAtLogin = appService.status == .enabled
     }
 }

@@ -14,6 +14,7 @@
 		E960DC3B2C4AC08200FE0AB7 /* DowntimeScriptService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E960DC3A2C4AC08200FE0AB7 /* DowntimeScriptService.swift */; };
 		E960DC3D2C4AC22400FE0AB7 /* DowntimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E960DC3C2C4AC22400FE0AB7 /* DowntimeViewModel.swift */; };
 		E960DC412C4AEA4400FE0AB7 /* DowntimeScript.scpt in Resources */ = {isa = PBXBuildFile; fileRef = E960DC402C4AEA4400FE0AB7 /* DowntimeScript.scpt */; };
+		E9B7AA392C4BE645002A424B /* AccessibilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B7AA382C4BE645002A424B /* AccessibilityHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		E960DC3C2C4AC22400FE0AB7 /* DowntimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DowntimeViewModel.swift; sourceTree = "<group>"; };
 		E960DC3E2C4AD5C800FE0AB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E960DC402C4AEA4400FE0AB7 /* DowntimeScript.scpt */ = {isa = PBXFileReference; lastKnownFileType = text; path = DowntimeScript.scpt; sourceTree = "<group>"; };
+		E9B7AA382C4BE645002A424B /* AccessibilityHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				E960DC2B2C4ABF8600FE0AB7 /* Assets.xcassets */,
 				E960DC302C4ABF8600FE0AB7 /* TrueDoNotDisturb.entitlements */,
 				E960DC2D2C4ABF8600FE0AB7 /* Preview Content */,
+				E9B7AA382C4BE645002A424B /* AccessibilityHelper.swift */,
 			);
 			path = TrueDoNotDisturb;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 				E960DC3D2C4AC22400FE0AB7 /* DowntimeViewModel.swift in Sources */,
 				E960DC2A2C4ABF8600FE0AB7 /* ContentView.swift in Sources */,
 				E960DC282C4ABF8600FE0AB7 /* TrueDoNotDisturbApp.swift in Sources */,
+				E9B7AA392C4BE645002A424B /* AccessibilityHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
