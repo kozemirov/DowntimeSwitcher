@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E960DC232C4ABF8600FE0AB7"
-               BuildableName = "TrueDoNotDisturb.app"
-               BlueprintName = "TrueDoNotDisturb"
+               BuildableName = "Downtime Switcher.app"
+               BlueprintName = "Downtime Switcher"
                ReferencedContainer = "container:TrueDoNotDisturb.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E960DC232C4ABF8600FE0AB7"
-            BuildableName = "TrueDoNotDisturb.app"
-            BlueprintName = "TrueDoNotDisturb"
+            BuildableName = "Downtime Switcher.app"
+            BlueprintName = "Downtime Switcher"
             ReferencedContainer = "container:TrueDoNotDisturb.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E960DC232C4ABF8600FE0AB7"
-            BuildableName = "TrueDoNotDisturb.app"
-            BlueprintName = "TrueDoNotDisturb"
+            BuildableName = "Downtime Switcher.app"
+            BlueprintName = "Downtime Switcher"
             ReferencedContainer = "container:TrueDoNotDisturb.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
