@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject private var vm: ScriptViewModel
+    @StateObject private var vm: DowntimeViewModel
     
-    init(vm: ScriptViewModel) {
+    init(vm: DowntimeViewModel) {
         self._vm = StateObject(wrappedValue: vm)
     }
     
@@ -32,5 +32,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(vm: ScriptViewModel())
+    ContentView(vm: DowntimeViewModel())
 }

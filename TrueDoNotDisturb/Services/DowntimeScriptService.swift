@@ -7,20 +7,20 @@
 
 import Foundation
 
-class ScriptService {
+class DowntimeScriptService {
     func executeScript() async throws -> Bool {
-        guard let path = Bundle.main.path(forResource: "Script", ofType: "scpt") else {
-                   throw NSError(domain: "ScriptServiceError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Script file not found"])
-               }
+        guard let path = Bundle.main.path(forResource: "DowntimeScript", ofType: "scpt") else {
+            return false
+        }
                        
         let url = URL(fileURLWithPath: path)
         var errors: NSDictionary?
 
         guard let appleScript = NSAppleScript(contentsOf: url, error: &errors) else {
            if let errors = errors {
-               throw NSError(domain: "ScriptServiceError", code: 2, userInfo: errors as? [String: Any])
+               return false
            } else {
-               throw NSError(domain: "ScriptServiceError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Failed to create AppleScript"])
+               return false
            }
         }
 
@@ -30,7 +30,7 @@ class ScriptService {
         }
 
         if let executionError = executionError {
-           throw NSError(domain: "ScriptServiceError", code: 3, userInfo: executionError as? [String: Any])
+            return false
         }
 
         return true

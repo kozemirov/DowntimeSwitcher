@@ -21,13 +21,13 @@ struct TrueDoNotDisturbApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var statusItem: NSStatusItem!
-    private var downtimeVM: ScriptViewModel!
+    private var downtimeVM: DowntimeViewModel!
 
     @MainActor
     func applicationDidFinishLaunching(_ notification: Notification) {
         
         requestAccessibilityPermission()
-        self.downtimeVM = ScriptViewModel()
+        self.downtimeVM = DowntimeViewModel()
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
@@ -49,9 +49,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     }
 
     func performLeftClickAction() {
-        changeStatusBarButton(number: 2)
         Task {
             await self.downtimeVM.script()
+            await changeStatusBarButton(state: self.downtimeVM.downtimeState)
         }
     }
 
@@ -83,18 +83,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         return menu
     }
 
-    private func changeStatusBarButton(number: Int) {
-        if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: number == 1 ? "moon" : "moon.fill", accessibilityDescription: "Moon")
+    private func changeStatusBarButton(state: Bool) {
+        DispatchQueue.main.async {
+            if let button = self.statusItem.button {
+                button.image = NSImage(systemSymbolName: state ? "moon.fill" : "moon", accessibilityDescription: "Moon")
+            }
         }
     }
 
     @objc func didTapOne() {
-        changeStatusBarButton(number: 1)
+//        changeStatusBarButton(state: )
     }
 
     @objc func didTapTwo() {
-        changeStatusBarButton(number: 2)
+//        changeStatusBarButton(number: 2)
     }
     
     @objc func didTapThree() {

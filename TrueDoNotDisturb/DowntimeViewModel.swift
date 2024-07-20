@@ -8,14 +8,16 @@
 import Foundation
 
 @MainActor 
-class ScriptViewModel: ObservableObject {
+class DowntimeViewModel: ObservableObject {
 
     @Published var downtimeState: Bool = false
     
     func script() async {
         do {
-            let state = try await ScriptService().executeScript()
-            self.downtimeState = state
+            let state = try await DowntimeScriptService().executeScript()
+            if state {
+                self.downtimeState.toggle()
+            }
         } catch {
             print(error)
         }
