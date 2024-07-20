@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ApplicationServices
 
 @main
 struct TrueDoNotDisturbApp: App {
@@ -24,12 +25,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
     @MainActor
     func applicationDidFinishLaunching(_ notification: Notification) {
+        
+        requestAccessibilityPermission()
         self.downtimeVM = ScriptViewModel()
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let statusButton = statusItem.button {
-            statusButton.image = NSImage(systemSymbolName: "1.circle", accessibilityDescription: "Line")
+            statusButton.image = NSImage(systemSymbolName: "moon", accessibilityDescription: "Moon")
             statusButton.target = self
             statusButton.action = #selector(handleStatusItemClick(_:))
             statusButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
@@ -46,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     }
 
     func performLeftClickAction() {
-        print("Left click action performed")
+        changeStatusBarButton(number: 2)
         Task {
             await self.downtimeVM.script()
         }
@@ -69,8 +72,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
         let two = NSMenuItem(title: "Two", action: #selector(didTapTwo), keyEquivalent: "2")
         menu.addItem(two)
-
-        let three = NSMenuItem(title: "Three", action: #selector(didTapThree), keyEquivalent: "3")
+        
+        let three = NSMenuItem(title: "Access", action: #selector(didTapThree), keyEquivalent: "3")
         menu.addItem(three)
 
         menu.addItem(NSMenuItem.separator())
@@ -82,7 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
     private func changeStatusBarButton(number: Int) {
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "\(number).circle", accessibilityDescription: number.description)
+            button.image = NSImage(systemSymbolName: number == 1 ? "moon" : "moon.fill", accessibilityDescription: "Moon")
         }
     }
 
@@ -93,8 +96,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     @objc func didTapTwo() {
         changeStatusBarButton(number: 2)
     }
-
+    
     @objc func didTapThree() {
-        changeStatusBarButton(number: 3)
+        requestAccessibilityPermission()
     }
+    
+    func requestAccessibilityPermission() {
+            let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
+            let accessEnabled = AXIsProcessTrustedWithOptions(options)
+            
+            if !accessEnabled {
+                print("Accessibility permissions were not enabled by the user.")
+            }
+        }
 }

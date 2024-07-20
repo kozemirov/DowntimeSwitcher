@@ -13,6 +13,7 @@
 		E960DC2F2C4ABF8600FE0AB7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E960DC2E2C4ABF8600FE0AB7 /* Preview Assets.xcassets */; };
 		E960DC3B2C4AC08200FE0AB7 /* ScriptService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E960DC3A2C4AC08200FE0AB7 /* ScriptService.swift */; };
 		E960DC3D2C4AC22400FE0AB7 /* ScriptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E960DC3C2C4AC22400FE0AB7 /* ScriptViewModel.swift */; };
+		E960DC412C4AEA4400FE0AB7 /* Script.scpt in Resources */ = {isa = PBXBuildFile; fileRef = E960DC402C4AEA4400FE0AB7 /* Script.scpt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		E960DC3A2C4AC08200FE0AB7 /* ScriptService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptService.swift; sourceTree = "<group>"; };
 		E960DC3C2C4AC22400FE0AB7 /* ScriptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptViewModel.swift; sourceTree = "<group>"; };
 		E960DC3E2C4AD5C800FE0AB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E960DC402C4AEA4400FE0AB7 /* Script.scpt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Script.scpt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,11 +59,12 @@
 		E960DC262C4ABF8600FE0AB7 /* TrueDoNotDisturb */ = {
 			isa = PBXGroup;
 			children = (
-				E960DC3E2C4AD5C800FE0AB7 /* Info.plist */,
 				E960DC372C4AC02F00FE0AB7 /* Services */,
+				E960DC402C4AEA4400FE0AB7 /* Script.scpt */,
 				E960DC3C2C4AC22400FE0AB7 /* ScriptViewModel.swift */,
 				E960DC272C4ABF8600FE0AB7 /* TrueDoNotDisturbApp.swift */,
 				E960DC292C4ABF8600FE0AB7 /* ContentView.swift */,
+				E960DC3E2C4AD5C800FE0AB7 /* Info.plist */,
 				E960DC2B2C4ABF8600FE0AB7 /* Assets.xcassets */,
 				E960DC302C4ABF8600FE0AB7 /* TrueDoNotDisturb.entitlements */,
 				E960DC2D2C4ABF8600FE0AB7 /* Preview Content */,
@@ -143,6 +146,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E960DC412C4AEA4400FE0AB7 /* Script.scpt in Resources */,
 				E960DC2F2C4ABF8600FE0AB7 /* Preview Assets.xcassets in Resources */,
 				E960DC2C2C4ABF8600FE0AB7 /* Assets.xcassets in Resources */,
 			);
@@ -289,6 +293,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TrueDoNotDisturb/TrueDoNotDisturb.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -306,9 +311,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = app.screentimecontrol.TrueDoNotDisturb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -320,6 +326,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TrueDoNotDisturb/TrueDoNotDisturb.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -337,9 +344,10 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = app.screentimecontrol.TrueDoNotDisturb;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
