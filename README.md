@@ -15,4 +15,4 @@
 Menu bar app can turn on and turn off macOS system downtime mode by a click
 
 ## Requirements
-macOS version >= 10.13
+macOS version >= 10.14
