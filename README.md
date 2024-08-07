@@ -14,5 +14,8 @@
 ## DowntimeSwitcher
 Menu bar app can turn on and turn off macOS system downtime mode by a click
 
+## Screencast
+[video](https://github.com/user-attachments/assets/df20e8a4-0a97-466b-a888-4f4055780c3e)
+
 ## Requirements
 macOS version >= 10.14
