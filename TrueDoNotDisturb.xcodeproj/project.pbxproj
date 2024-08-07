@@ -61,16 +61,16 @@
 		E960DC262C4ABF8600FE0AB7 /* TrueDoNotDisturb */ = {
 			isa = PBXGroup;
 			children = (
+				E960DC2D2C4ABF8600FE0AB7 /* Preview Content */,
 				E9B7AA372C4BCBE4002A424B /* Scripts */,
 				E960DC372C4AC02F00FE0AB7 /* Services */,
-				E960DC3C2C4AC22400FE0AB7 /* DowntimeViewModel.swift */,
 				E960DC272C4ABF8600FE0AB7 /* TrueDoNotDisturbApp.swift */,
 				E960DC292C4ABF8600FE0AB7 /* ContentView.swift */,
+				E960DC3C2C4AC22400FE0AB7 /* DowntimeViewModel.swift */,
+				E9B7AA382C4BE645002A424B /* AccessibilityHelper.swift */,
 				E960DC3E2C4AD5C800FE0AB7 /* Info.plist */,
 				E960DC2B2C4ABF8600FE0AB7 /* Assets.xcassets */,
 				E960DC302C4ABF8600FE0AB7 /* TrueDoNotDisturb.entitlements */,
-				E960DC2D2C4ABF8600FE0AB7 /* Preview Content */,
-				E9B7AA382C4BE645002A424B /* AccessibilityHelper.swift */,
 			);
 			path = TrueDoNotDisturb;
 			sourceTree = "<group>";

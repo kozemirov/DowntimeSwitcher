@@ -23,6 +23,8 @@ struct TrueDoNotDisturbApp: App {
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var statusItem: NSStatusItem!
     private var downtimeVM: DowntimeViewModel!
+    private let menuBarIconEnabled = "MenuBarIconEnabled"
+    private let menuBarIconDisabled = "MenuBarIconDisabled"
 
     @MainActor
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -31,7 +33,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let statusButton = statusItem.button {
-            statusButton.image = NSImage(systemSymbolName: "moon", accessibilityDescription: "Moon")
+            if let image = NSImage(named: menuBarIconEnabled) {
+                image.isTemplate = true
+                statusButton.image = image
+            }
             statusButton.target = self
             statusButton.action = #selector(handleStatusItemClick(_:))
             statusButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
@@ -85,7 +90,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private func changeStatusBarButton(state: Bool) {
         DispatchQueue.main.async {
             if let button = self.statusItem.button {
-                button.image = NSImage(systemSymbolName: state ? "moon.fill" : "moon", accessibilityDescription: "Moon")
+                if let image = NSImage(named: state ? self.menuBarIconEnabled : self.menuBarIconDisabled) {
+                    image.isTemplate = true
+                    button.image = image
+                }
             }
         }
     }
