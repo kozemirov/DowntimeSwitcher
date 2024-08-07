@@ -1,3 +1,11 @@
+tell application "System Events"
+    set isRunning to (name of every process) contains "System Settings"
+    if isRunning then
+        tell application "System Settings" to quit
+        delay 0.5
+    end if
+end tell
+
 do shell script "open x-apple.systempreferences:com.apple.Screen-Time-Settings"
 
 tell application "System Events"
@@ -16,7 +24,8 @@ end tell
 delay 0.5
 
 tell application "System Events"
-    if exists application process "System Settings" then
-        keystroke "q" using command down
+    set isRunning to (name of every process) contains "System Settings"
+    if isRunning then
+        tell application "System Settings" to quit
     end if
 end tell
