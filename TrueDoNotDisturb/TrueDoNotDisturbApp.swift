@@ -25,6 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var downtimeVM: DowntimeViewModel!
     private let menuBarIconEnabled = "MenuBarIconEnabled"
     private let menuBarIconDisabled = "MenuBarIconDisabled"
+    var launchAtLoginEnabled: Bool = false
 
     @MainActor
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -33,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let statusButton = statusItem.button {
-            if let image = NSImage(named: menuBarIconEnabled) {
+            if let image = NSImage(named: menuBarIconDisabled) {
                 image.isTemplate = true
                 statusButton.image = image
             }
@@ -60,6 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     }
 
     func rightClickMenuShow() {
+        checkIfLaunchAtLogin()
         let menu = createMenu()
         if let button = statusItem.button {
             statusItem.menu = menu
@@ -71,18 +73,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     func createMenu() -> NSMenu {
         let menu = NSMenu()
 
-        let loginLaunch = NSMenuItem(title: "Launch at login", action: #selector(addLoginLaunch), keyEquivalent: "")
+        let loginLaunch = NSMenuItem(title: "\(launchAtLoginEnabled ? "✓  " : "     ")Launch at login", action: #selector(toggleLoginLaunch), keyEquivalent: "")
         menu.addItem(loginLaunch)
         
-        let doNotLoginLaunch = NSMenuItem(title: "Do not launch at login", action: #selector(removeLoginLaunch), keyEquivalent: "")
-        menu.addItem(doNotLoginLaunch)
-        
-        let permissions = NSMenuItem(title: "Request pesmissions", action: #selector(requestPermission), keyEquivalent: "")
+        let permissions = NSMenuItem(title: "     Request required pesmissions", action: #selector(requestPermission), keyEquivalent: "")
         menu.addItem(permissions)
 
         menu.addItem(NSMenuItem.separator())
 
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "     Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
 
         return menu
     }
@@ -98,12 +97,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         }
     }
 
-    @objc func addLoginLaunch() {
-        addToLoginItems()
-    }
-    
-    @objc func removeLoginLaunch() {
-        removeFromLoginItems()
+    @objc func toggleLoginLaunch() {
+        launchAtLoginEnabled ? removeFromLoginItems() : addToLoginItems()
     }
     
     @objc func requestPermission() {
@@ -138,6 +133,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
 
     func checkIfLaunchAtLogin() {
         let appService = SMAppService.mainApp
-//        launchAtLogin = appService.status == .enabled
+        launchAtLoginEnabled = appService.status == .enabled
     }
 }
