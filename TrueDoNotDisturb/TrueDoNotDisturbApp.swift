@@ -76,7 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         let loginLaunch = NSMenuItem(title: "\(launchAtLoginEnabled ? "✓  " : "     ")Launch at login", action: #selector(toggleLoginLaunch), keyEquivalent: "")
         menu.addItem(loginLaunch)
         
-        let permissions = NSMenuItem(title: "     Request required pesmissions", action: #selector(requestPermission), keyEquivalent: "")
+        let permissions = NSMenuItem(title: "     Request required permissions", action: #selector(requestPermission), keyEquivalent: "")
         menu.addItem(permissions)
 
         menu.addItem(NSMenuItem.separator())
