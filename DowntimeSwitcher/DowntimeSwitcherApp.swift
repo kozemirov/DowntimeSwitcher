@@ -23,8 +23,8 @@ struct DowntimeSwitcherApp: App {
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var statusItem: NSStatusItem!
     private var downtimeVM: DowntimeViewModel!
-    private let menuBarIconEnabled = "MenuBarIconEnabled"
-    private let menuBarIconDisabled = "MenuBarIconDisabled"
+    private let menuBarIconEnabledAssetName = "MenuBarIconEnabled"
+    private let menuBarIconDisabledAssetName = "MenuBarIconDisabled"
     var launchAtLoginEnabled: Bool = false
     private let spaces = "     "
 
@@ -35,7 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let statusButton = statusItem.button {
-            if let image = NSImage(named: menuBarIconDisabled) {
+            if let image = NSImage(named: menuBarIconDisabledAssetName) {
                 image.isTemplate = true
                 statusButton.image = image
             }
@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         }
     }
 
-    @objc func handleStatusItemClick(_ sender: NSStatusBarButton) {
+    @MainActor @objc func handleStatusItemClick(_ sender: NSStatusBarButton) {
         let event = NSApp.currentEvent!
         if event.type == .leftMouseUp {
             leftClickScriptRun()
@@ -54,14 +54,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         }
     }
 
-    func leftClickScriptRun() {
+    @objc func leftClickScriptRun() {
         Task {
             await self.downtimeVM.script()
             await changeStatusBarButton(state: self.downtimeVM.downtimeState)
         }
     }
 
-    func rightClickMenuShow() {
+    @MainActor func rightClickMenuShow() {
         checkIfLaunchAtLogin()
         let menu = createMenu()
         if let button = statusItem.button {
@@ -71,11 +71,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         }
     }
 
-    func createMenu() -> NSMenu {
+    @MainActor func createMenu() -> NSMenu {
         let menu = NSMenu()
+        
+        let downtimeToggle = NSMenuItem()
+        let downtimeToggleText = NSMutableAttributedString()
+        let text = NSAttributedString(string: "\(downtimeVM.downtimeState ? "✓  " : spaces)Switch ", attributes: [NSAttributedString.Key.foregroundColor: NSColor.black])
+        let grayText = NSAttributedString(string: "(Downtime Mode: \(downtimeVM.downtimeState ? "ON" : "OFF"))", attributes: [NSAttributedString.Key.foregroundColor: NSColor.lightGray])
+        downtimeToggleText.append(text)
+        downtimeToggleText.append(grayText)
+        downtimeToggle.attributedTitle = downtimeToggleText
+        downtimeToggle.action = #selector(leftClickScriptRun)
+        menu.addItem(downtimeToggle)
+        
+        menu.addItem(NSMenuItem.separator())
 
-        let loginLaunch = NSMenuItem(title: "\(launchAtLoginEnabled ? "✓  " : spaces)Launch at login", action: #selector(toggleLoginLaunch), keyEquivalent: "")
-        menu.addItem(loginLaunch)
+        let loginLaunchToggle = NSMenuItem(title: "\(launchAtLoginEnabled ? "✓  " : spaces)Launch at Login", action: #selector(toggleLoginLaunch), keyEquivalent: "")
+        menu.addItem(loginLaunchToggle)
         
         menu.addItem(NSMenuItem.separator())
         
@@ -86,7 +98,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         menu.addItem(automationPermissions)
 
         menu.addItem(NSMenuItem.separator())
-
+        
         menu.addItem(NSMenuItem(title: "\(spaces)Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
 
         return menu
@@ -95,7 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private func changeStatusBarButton(state: Bool) {
         DispatchQueue.main.async {
             if let button = self.statusItem.button {
-                if let image = NSImage(named: state ? self.menuBarIconEnabled : self.menuBarIconDisabled) {
+                if let image = NSImage(named: state ? self.menuBarIconEnabledAssetName : self.menuBarIconDisabledAssetName) {
                     image.isTemplate = true
                     button.image = image
                 }
