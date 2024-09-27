@@ -26,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private let menuBarIconEnabled = "MenuBarIconEnabled"
     private let menuBarIconDisabled = "MenuBarIconDisabled"
     var launchAtLoginEnabled: Bool = false
+    private let spaces = "     "
 
     @MainActor
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -73,15 +74,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     func createMenu() -> NSMenu {
         let menu = NSMenu()
 
-        let loginLaunch = NSMenuItem(title: "\(launchAtLoginEnabled ? "✓  " : "     ")Launch at login", action: #selector(toggleLoginLaunch), keyEquivalent: "")
+        let loginLaunch = NSMenuItem(title: "\(launchAtLoginEnabled ? "✓  " : spaces)Launch at login", action: #selector(toggleLoginLaunch), keyEquivalent: "")
         menu.addItem(loginLaunch)
         
-        let permissions = NSMenuItem(title: "     Request required permissions", action: #selector(requestPermission), keyEquivalent: "")
-        menu.addItem(permissions)
+        menu.addItem(NSMenuItem.separator())
+        
+        let accessibilityPermissions = NSMenuItem(title: "\(spaces)Request Necessary Accesibility Permission", action: #selector(requestAccessibilityPermission), keyEquivalent: "")
+        menu.addItem(accessibilityPermissions)
+        
+        let automationPermissions = NSMenuItem(title: "\(spaces)Request Necessary Automation Permission", action: #selector(requestAutomationPermission), keyEquivalent: "")
+        menu.addItem(automationPermissions)
 
         menu.addItem(NSMenuItem.separator())
 
-        menu.addItem(NSMenuItem(title: "     Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "\(spaces)Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
 
         return menu
     }
@@ -101,14 +107,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         launchAtLoginEnabled ? removeFromLoginItems() : addToLoginItems()
     }
     
-    @objc func requestPermission() {
+    @objc func requestAccessibilityPermission() {
         let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
         let accessEnabled = AXIsProcessTrustedWithOptions(options)
         
         if !accessEnabled {
-//            AccessibilityHelper.showAccessibilityAlert()
-            print("Accessibility permissions were not enabled by the user.")
+            PermissionHelper.showAccessibilityAlert()
         }
+    }
+    
+    @objc func requestAutomationPermission() {
+        PermissionHelper.showAutomationAlert()
     }
     
     func addToLoginItems() {
