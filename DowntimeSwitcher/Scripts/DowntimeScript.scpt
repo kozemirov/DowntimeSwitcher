@@ -11,8 +11,9 @@ do shell script "open x-apple.systempreferences:com.apple.Screen-Time-Settings"
 tell application "System Events"
     tell its application process "System Settings"
         set frontmost to true
-        delay 1
+        delay 0.5
         tell front window to key code 48
+        delay 0.5
         tell front window to key code 48
         tell front window to key code 48
         tell front window to key code 48
