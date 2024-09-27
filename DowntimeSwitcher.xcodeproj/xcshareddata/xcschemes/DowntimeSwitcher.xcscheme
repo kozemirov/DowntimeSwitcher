@@ -18,7 +18,7 @@
                BlueprintIdentifier = "E960DC232C4ABF8600FE0AB7"
                BuildableName = "Downtime Switcher.app"
                BlueprintName = "Downtime Switcher"
-               ReferencedContainer = "container:TrueDoNotDisturb.xcodeproj">
+               ReferencedContainer = "container:DowntimeSwitcher.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,7 +47,7 @@
             BlueprintIdentifier = "E960DC232C4ABF8600FE0AB7"
             BuildableName = "Downtime Switcher.app"
             BlueprintName = "Downtime Switcher"
-            ReferencedContainer = "container:TrueDoNotDisturb.xcodeproj">
+            ReferencedContainer = "container:DowntimeSwitcher.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -64,7 +64,7 @@
             BlueprintIdentifier = "E960DC232C4ABF8600FE0AB7"
             BuildableName = "Downtime Switcher.app"
             BlueprintName = "Downtime Switcher"
-            ReferencedContainer = "container:TrueDoNotDisturb.xcodeproj">
+            ReferencedContainer = "container:DowntimeSwitcher.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

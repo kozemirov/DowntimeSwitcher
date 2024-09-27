@@ -1,6 +1,6 @@
 //
 //  AccessibilityHelper.swift
-//  TrueDoNotDisturb
+//  DowntimeSwitcher
 //
 //  Created by Pavel Kozemirov on 20/07/2024.
 //

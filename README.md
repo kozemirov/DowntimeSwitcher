@@ -1,5 +1,5 @@
 <p align="center">
-	<img width="200" height="200" margin-right="100%" src="/TrueDoNotDisturb/Assets.xcassets/AppIcon.appiconset/256.png">
+	<img width="200" height="200" margin-right="100%" src="/DowntimeSwitcher/Assets.xcassets/AppIcon.appiconset/256.png">
 </p>
 
 <p align="center">

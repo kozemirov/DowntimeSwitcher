@@ -1,6 +1,6 @@
 //
-//  TrueDoNotDisturbApp.swift
-//  TrueDoNotDisturb
+//  DowntimeSwitcherApp.swift
+//  DowntimeSwitcher
 //
 //  Created by Pavel Kozemirov on 19/07/2024.
 //
@@ -10,7 +10,7 @@ import ApplicationServices
 import ServiceManagement
 
 @main
-struct TrueDoNotDisturbApp: App {
+struct DowntimeSwitcherApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     
     var body: some Scene {

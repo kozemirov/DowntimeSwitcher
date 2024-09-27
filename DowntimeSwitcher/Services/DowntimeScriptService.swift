@@ -1,6 +1,6 @@
 //
 //  ScriptService.swift
-//  TrueDoNotDisturb
+//  DowntimeSwitcher
 //
 //  Created by Pavel Kozemirov on 19/07/2024.
 //
